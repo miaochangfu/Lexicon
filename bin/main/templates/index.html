@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta content="text/html;charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body>
+	<h3>model</h3>
+	<input id="remote1" type="text" data-provide="typeahead"
+		autocomplete="off" data-source='["Deluxe Bicycle", "Super Deluxe Trampoline", "Super Duper Scooter"]'></input>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap3-typeahead.js"></script>
+	<script src="js/jquery-3.2.1.js"></script>
+	
+	<script th:inline="javascript">
+	$(document).ready(function($) {
+		   // Workaround for bug in mouse item selection
+		   $.fn.typeahead.Constructor.prototype.blur = function() {
+		      var that = this;
+		      setTimeout(function () { that.hide() }, 250);
+		   };
+		 
+		   $('#remote').typeahead({
+		      source: function(query, process) {
+		         return ["Deluxe Bicycle", "Super Deluxe Trampoline", "Super Duper Scooter"];
+		      }
+		   });
+		   
+			source : function(query, process) {
+				return $.ajax({
+					url : '/get',
+					type : 'post',
+					data : {
+						name : query
+					},
+					success : function(result) {
+						return process(result);
+					},
+				});
+			}
+		})
+		 
+	</script>
+</body>
+</html>

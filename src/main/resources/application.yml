@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/user
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver 
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    cache: false
+    #prefix: /templates
+    suffix: .html
+    mode: HTML5
+server:
+  port: 8080     
